@@ -3,23 +3,11 @@ from playwright.sync_api import Page, expect
 import os
 import dotenv
 from time import sleep
-import re
+from conftest import fixture
 
 dotenv.load_dotenv(override=True)
 
 # pytest --headed -s -m hm
-
-@fixture
-def login(page: Page):
-    def _login():
-        page.goto(os.getenv('site'))
-
-        page.fill('#user-name', os.getenv('user_correct'))
-  
-        page.fill('#password', os.getenv('passwd'))
-
-        page.click('#login-button')
-    return _login
 
 @mark.full
 def test_full_correct(page: Page, login):
@@ -42,7 +30,7 @@ def test_full_correct(page: Page, login):
     page.click('#finish')    
 
 @mark.smoke
-def test_correct_login(page: Page):
+def test_login_correct(page: Page):
     page.goto(os.getenv('site'))
 
     page.fill('#user-name', os.getenv('user_correct'))
@@ -54,7 +42,7 @@ def test_correct_login(page: Page):
     expect(page).to_have_url('https://www.saucedemo.com/inventory.html')
     
 @mark.smoke
-def test_incorrect_login(page: Page):
+def test_login_incorrect(page: Page):
     page.goto(os.getenv('site'))
 
     
