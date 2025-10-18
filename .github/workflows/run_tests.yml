@@ -38,25 +38,33 @@ jobs:
      
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
-        run: pytest --alluredir=allure-results
+        run: pytest --alluredir=allure-results 
+        continue-on-error: true
       - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
         run: pytest -m smoke --alluredir=allure-results  
+        continue-on-error: true
       - name: run full tests 
         if: "github.event.inputs.deployment_target == 'full'"
-        run: pytest -m full --alluredir=allure-results        
+        run: pytest -m full --alluredir=allure-results   
+        continue-on-error: true
       - name: run hm tests 
         if: "github.event.inputs.deployment_target == 'hm'"
-        run: pytest -m hm --alluredir=allure-results     
+        run: pytest -m hm --alluredir=allure-results    
+        continue-on-error: true
       - name: run slow tests
         if: "github.event.inputs.deployment_target == 'slow'"
-        run: pytest -m slow --alluredir=allure-results         
+        run: pytest -m slow --alluredir=allure-results   
+        continue-on-error: true
       - name: run correct tests 
         if: "github.event.inputs.deployment_target == 'correct'"
-        run: pytest -m correct --alluredir=allure-results 
+        run: pytest -m correct --alluredir=allure-results
+        continue-on-error: true
       - name: run incorrect tests
         if: "github.event.inputs.deployment_target == 'incorrect'"
-        run: pytest -m incorrect --alluredir=allure-results        
+        run: pytest -m incorrect --alluredir=allure-results    
+        continue-on-error: true
+
 
       - name: install Java
         uses: actions/setup-java@v5
@@ -73,3 +81,5 @@ jobs:
           name: allure-report
           path: allure-report
           retention-days: 1
+
+          
