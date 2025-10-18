@@ -1,1 +1,19 @@
+name: SwagLabs tests python
 
+on: [push]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    name: run autotests
+    steps:
+      - name: checkout autotests
+        uses:  actions/checkout@v5
+      - name: setup Python environment
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13' 
+      - name: Install dependencies    
+        run: pip install -r requirements.txt
+      - name: run tests
+        run: pytest
