@@ -22,13 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     name: run autotests
     steps:
-      # - uses: actions/checkout@v4
-      # - uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.11'
-      # - run: pip install pytest playwright pytest-playwright
-      # - run: playwright install
-        
+      
       - name: checkout autotests
         uses:  actions/checkout@v5
       - name: setup Python environment
@@ -37,26 +31,36 @@ jobs:
           python-version: '3.13' 
       - name: Install dependencies    
         run: pip install -r requirements.txt
-      - run: playwright install
-     
+      - name: install playwright
+        run: playwright install
+      - name: install Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'microsoft' 
+          java-version: '17'
+      - name: install Allure
+        run: sudo wget https://github.com/allure-framework/allure2/releases/dowload/2.35.1/allure-2.35.1.tgz && sudo tar -zxvf allure-2.35.1.tgz -C /opt/ $$ sudo ln /opt/allure-2.35.1/bin/allure /usr/bin/allure      
+      - name: generate report
+        run: allure generate -c allure-results -o allure-report
+      
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
-        run: pytest
+        run: pytest --alluredir=allure-results
       - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: pytest -m smoke     
-      - name: run full tests
+        run: pytest -m smoke --alluredir=allure-results  
+      - name: run full tests 
         if: "github.event.inputs.deployment_target == 'full'"
-        run: pytest -m full        
-      - name: run hm tests
+        run: pytest -m full --alluredir=allure-results        
+      - name: run hm tests 
         if: "github.event.inputs.deployment_target == 'hm'"
-        run: pytest -m hm     
+        run: pytest -m hm --alluredir=allure-results     
       - name: run slow tests
         if: "github.event.inputs.deployment_target == 'slow'"
-        run: pytest -m slow         
-      - name: run correct tests
+        run: pytest -m slow --alluredir=allure-results         
+      - name: run correct tests 
         if: "github.event.inputs.deployment_target == 'correct'"
-        run: pytest -m correct 
+        run: pytest -m correct --alluredir=allure-results 
       - name: run incorrect tests
         if: "github.event.inputs.deployment_target == 'incorrect'"
-        run: pytest -m incorrect        
+        run: pytest -m incorrect --alluredir=allure-results        
