@@ -1,12 +1,11 @@
 from pytest import mark, fixture
 from playwright.sync_api import Page, expect
 import re
-from time import sleep
 from conftest import fixture
 import os
 
 
-@mark.filters
+@mark.correct
 def test_filtress_AZ(page:Page, login):
     login()
     
@@ -16,7 +15,7 @@ def test_filtress_AZ(page:Page, login):
     
     assert items == sorted(items), "A-Z filter not working correctly"
 
-@mark.filters
+@mark.correct
 def test_filtress_ZA(page:Page, login):
     login()
     
@@ -26,7 +25,7 @@ def test_filtress_ZA(page:Page, login):
     
     assert items == sorted(items, reverse=True), "Z-A filter not working correctly"
 
-@mark.filters
+@mark.correct
 def test_filtress_price_low(page:Page, login):
     login()
     
@@ -38,7 +37,7 @@ def test_filtress_price_low(page:Page, login):
 
     assert price_clear == sorted(price_clear), "Price dont sorted low to high"
 
-@mark.filters
+@mark.correct
 def test_filtress_price_high(page:Page, login):
     login()
     
@@ -48,10 +47,9 @@ def test_filtress_price_high(page:Page, login):
     
     price_clear = [float(re.sub(r'[^\d.]', '', price)) for price in prices]
 
-    assert price_clear == sorted(price_clear, reverse=True), "Price dont sorted high to low)"
+    assert price_clear == sorted(price_clear, reverse=True), "Price dont sorted high to low"
 
-
-
+@mark.correct
 def test_all_images_unique_correct(page: Page, login):
     login()
 
@@ -111,8 +109,7 @@ def test_all_images_unique_correct(page: Page, login):
     
     print("Все изображения уникальны!")
 
-
-@mark.hm
+@mark.incorrect
 def test_all_images_unique_incorrect(page: Page, login_problem):
     login_problem()
 
