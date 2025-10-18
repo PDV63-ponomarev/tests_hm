@@ -22,14 +22,22 @@ jobs:
     runs-on: ubuntu-latest
     name: run autotests
     steps:
-      - name: checkout autotests
-        uses:  actions/checkout@v5
-      - name: setup Python environment
-        uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.13' 
-      - name: Install dependencies    
-        run: pip install -r requirements.txt
+          python-version: '3.11'
+      - run: pip install pytest playwright pytest-playwright
+      - run: playwright install
+        
+      # - name: checkout autotests
+      #   uses:  actions/checkout@v5
+      # - name: setup Python environment
+      #   uses: actions/setup-python@v6
+      #   with:
+      #     python-version: '3.13' 
+      # - name: Install dependencies    
+      #   run: pip install -r requirements.txt
+        
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
         run: pytest
