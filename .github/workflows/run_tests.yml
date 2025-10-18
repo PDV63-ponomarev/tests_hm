@@ -30,6 +30,24 @@ jobs:
           python-version: '3.13' 
       - name: Install dependencies    
         run: pip install -r requirements.txt
-      - name: run tests
+      - name: run all tests
+        if: "github.event.inputs.deployment_target == 'all'"
         run: pytest
-        
+      - name: run smoke tests
+        if: "github.event.inputs.deployment_target == 'smoke'"
+        run: pytest -m smoke     
+      - name: run full tests
+        if: "github.event.inputs.deployment_target == 'full'"
+        run: pytest -m full        
+      - name: run hm tests
+        if: "github.event.inputs.deployment_target == 'hm'"
+        run: pytest -m hm     
+      - name: run slow tests
+        if: "github.event.inputs.deployment_target == 'slow'"
+        run: pytest -m slow         
+      - name: run correct tests
+        if: "github.event.inputs.deployment_target == 'correct'"
+        run: pytest -m correct 
+      - name: run incorrect tests
+        if: "github.event.inputs.deployment_target == 'incorrect'"
+        run: pytest -m incorrect        
