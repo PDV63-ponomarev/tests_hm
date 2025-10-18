@@ -37,7 +37,7 @@ def test_price_equal(page:Page, login):
     assert price_one_clear == price_clear, 'Prices in total not equal'
 
   
-@mark.hm
+@mark.price
 def test_price_summ(page:Page, login):
     login()
     price_one = page.locator('.inventory_item_price').nth(0).text_content()
