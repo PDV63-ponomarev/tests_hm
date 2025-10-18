@@ -34,15 +34,8 @@ jobs:
       - name: install playwright
         run: playwright install
       - run: install allure-pytest  
-      - name: install Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'microsoft' 
-          java-version: '17'
-      - name: install Allure
-        run: sudo wget https://github.com/allure-framework/allure2/releases/dowload/2.35.1/allure-2.35.1.tgz && sudo tar -zxvf allure-2.35.1.tgz -C /opt/ $$ sudo ln /opt/allure-2.35.1/bin/allure /usr/bin/allure      
-
-      
+         
+     
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
         run: pytest --alluredir=allure-results
@@ -65,7 +58,13 @@ jobs:
         if: "github.event.inputs.deployment_target == 'incorrect'"
         run: pytest -m incorrect --alluredir=allure-results        
 
-
+      - name: install Java
+        uses: actions/setup-java@v5
+        with:
+         distribution: 'microsoft' 
+         java-version: '17'
+      - name: install Allure
+        run: sudo wget https://github.com/allure-framework/allure2/releases/dowload/2.35.1/allure-2.35.1.tgz && sudo tar -zxvf allure-2.35.1.tgz -C /opt/ $$ sudo ln /opt/allure-2.35.1/bin/allure /usr/bin/allure
       - name: generate report
         run: allure generate -c allure-results -o allure-report
       - name: save allure report
