@@ -1,5 +1,6 @@
 import requests
 import os
+from pytest import mark
 
 git_token = os.getenv('git_token')
 git_name = os.getenv('git_name')
@@ -13,7 +14,7 @@ headers = {
        "Accept": "application/vnd.github.v3+json"
     }  
 
-
+@mark.git
 def test_get_repo():
     
     url_get_repo = f'{url}/users/{git_name}/repos'
@@ -27,7 +28,7 @@ def test_get_repo():
     for name in repo_names:
         print(f"  - {name}")
     
-
+@mark.git
 def test_new_repo():
       
     data = {
@@ -51,7 +52,7 @@ def test_new_repo():
         return None
         
     
-    
+@mark.git  
 def test_delete_repo():
     url_delete_repo = f'{url}/repos/{git_name}/{git_repo}'   
     
