@@ -2,4 +2,4 @@
 venv
 .pytest_cache
 __pycache__
-test_git_api/.env
+test_git_api\.env
