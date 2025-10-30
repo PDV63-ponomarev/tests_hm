@@ -10,11 +10,9 @@ on:
         default: smoke
         options:
           - smoke
-          - full
-          - hm
-          - slow
           - correct
           - incorrect
+          - price
           - all
 
 permissions:
