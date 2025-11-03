@@ -9,6 +9,7 @@ dotenv.load_dotenv(override=True)
 
 @mark.smoke
 def test_full_correct(page: Page, login):
+   
     login()
     
     page.select_option('//*[@class="product_sort_container"]', 'Price (high to low)')
@@ -29,6 +30,7 @@ def test_full_correct(page: Page, login):
 
 @mark.smoke
 def test_login_correct(page: Page):
+    
     page.goto(os.getenv('site'))
 
     page.fill('#user-name', os.getenv('user_correct'))
@@ -41,18 +43,16 @@ def test_login_correct(page: Page):
     
 @mark.smoke
 def test_login_incorrect(page: Page):
+    
     page.goto(os.getenv('site'))
 
-    
     page.fill('#user-name', os.getenv('user_lock'))
 
     page.fill('#password', os.getenv('passwd'))
 
     page.click('#login-button')
     
-
     expect(page).to_have_url(os.getenv('site'))
 
     error_mess = page.locator('[data-test="error"]')
     expect(error_mess).to_be_visible()
-

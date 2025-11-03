@@ -7,6 +7,7 @@ from time import sleep
 
 @mark.price
 def test_price_equal(page:Page, login):
+    
     login()
 
     price_one = page.locator('.inventory_item_price').nth(0).text_content()
@@ -35,10 +36,10 @@ def test_price_equal(page:Page, login):
     price_one_clear = float(re.sub(r'[^\d.]', '', price_one))
     
     assert price_one_clear == price_clear, 'Prices in total not equal'
-
-  
+ 
 @mark.price
 def test_price_summ(page:Page, login):
+    
     login()
     price_one = page.locator('.inventory_item_price').nth(0).text_content()
     price_two = page.locator('.inventory_item_price').nth(1).text_content()
@@ -69,5 +70,3 @@ def test_price_summ(page:Page, login):
     price_summ = sum([price_one, price_two])
     
     assert price_summ == price_clear, 'Prices summ in total not equal'
-
-
