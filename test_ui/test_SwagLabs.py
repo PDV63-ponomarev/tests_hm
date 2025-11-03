@@ -7,9 +7,7 @@ from conftest import fixture
 
 dotenv.load_dotenv(override=True)
 
-# pytest --headed -s -m hm
-
-@mark.full
+@mark.smoke
 def test_full_correct(page: Page, login):
     login()
     
