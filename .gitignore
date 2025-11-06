@@ -2,4 +2,3 @@
 venv
 .pytest_cache
 __pycache__
-tests_hm\test_git_api\.env

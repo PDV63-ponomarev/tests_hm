@@ -6,7 +6,6 @@ git_token = os.getenv('git_token')
 git_name = os.getenv('git_name')
 git_repo = os.getenv('git_repo')
 
-
 url = 'https://api.github.com/'
 
 headers = {
@@ -16,9 +15,8 @@ headers = {
 
 @mark.git
 def test_get_repo():
-    
+   
     url_get_repo = f'{url}/users/{git_name}/repos'
-    
     response = requests.get(url_get_repo, headers=headers)
     
     assert  response.status_code == 200, f'Ошибка: {response.status_code}'   
@@ -30,13 +28,12 @@ def test_get_repo():
     
 @mark.git
 def test_new_repo():
-      
+   
     data = {
         "name": git_repo,
-        "description": None,
+        "description": None
     }
-    url_create_repo = f'{url}/user/repos'
-            
+    url_create_repo = f'{url}/user/repos'     
     response = requests.post(url_create_repo, headers=headers, json=data)
    
     if response.status_code == 201:
@@ -49,15 +46,14 @@ def test_new_repo():
         return None
     else:
         print(f'Ошибка: {response.status_code}')
-        return None
-        
+        return None      
     
 @mark.git  
 def test_delete_repo():
-    url_delete_repo = f'{url}/repos/{git_name}/{git_repo}'   
     
+    url_delete_repo = f'{url}/repos/{git_name}/{git_repo}'   
     response = requests.delete(url_delete_repo, headers=headers)
-
+   
     if response.status_code == 204:
         print(f'Репозиторий {git_repo} успешно  удален')
         test_get_repo()
@@ -65,4 +61,3 @@ def test_delete_repo():
         print(f'Ошибка: {response.status_code}, не найден репозиторий')
     else:
         print(f'Ошибка: {response.status_code}')
-
